@@ -819,25 +819,6 @@
                 </div>
             </div>
 
-            <div class="countdown" id="countdown">
-                <div class="countdown-item">
-                    <div class="number" id="days">00</div>
-                    <div class="label">Days</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="number" id="hours">00</div>
-                    <div class="label">Hours</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="number" id="minutes">00</div>
-                    <div class="label">Minutes</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="number" id="seconds">00</div>
-                    <div class="label">Seconds</div>
-                </div>
-            </div>
-
             <div class="hero-buttons" style="display:flex;gap:15px;flex-wrap:wrap;justify-content:center;margin-top:20px;">
                 <a href="javascript:void(0)" class="btn btn-primary" onclick="openGformModal('Poet')" style="min-width:180px;"><i class="fas fa-feather-pointed"></i> Register for Poet</a>
                 <a href="#register" class="btn btn-primary" onclick="selectRegType('Participation')" style="min-width:180px;"><i class="fas fa-users"></i> Register for Participation</a>
@@ -1102,20 +1083,6 @@
         }
         createParticles();
 
-        // ===== COUNTDOWN =====
-        function updateCountdown() {
-            const target = new Date('March 12, 2026 09:00:00').getTime();
-            const now = Date.now();
-            const diff = target - now;
-            if (diff <= 0) { ['days','hours','minutes','seconds'].forEach(id => document.getElementById(id).textContent = '00'); return; }
-            document.getElementById('days').textContent = String(Math.floor(diff / 86400000)).padStart(2, '0');
-            document.getElementById('hours').textContent = String(Math.floor((diff % 86400000) / 3600000)).padStart(2, '0');
-            document.getElementById('minutes').textContent = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
-            document.getElementById('seconds').textContent = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
-        }
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
-
         // ===== SCROLL REVEAL =====
         function revealOnScroll() {
             document.querySelectorAll('.reveal').forEach(el => {
@@ -1308,26 +1275,6 @@
             renderRegistrations();
             showToast('All registrations cleared!');
         }
-
-        // ===== GOOGLE FORM MODAL =====
-        const GFORM_URLS = {
-            'Stall': 'https://docs.google.com/forms/d/e/1FAIpQLScIDAQJat6GjBNHZt7E9gvoYtZnjDweKjXQCB7SMIbB7ekzLw/viewform?embedded=true',
-            'Poet': 'https://docs.google.com/forms/d/e/1FAIpQLSdkmJon2DEp5rl3yQFMPoi1ssFgvEz4Pv0dGlbnzFUNE2a5zw/viewform?embedded=true'
-        };
-        function openGformModal(type) {
-            document.getElementById('gformTitle').textContent = 'Registration for ' + type;
-            document.getElementById('gformIframe').src = GFORM_URLS[type];
-            document.getElementById('gformModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-        function closeGformModal() {
-            document.getElementById('gformModal').classList.remove('active');
-            document.getElementById('gformIframe').src = '';
-            document.body.style.overflow = '';
-        }
-        document.getElementById('gformModal').addEventListener('click', function(e) {
-            if (e.target === this) closeGformModal();
-        });
 
         // ===== ADMIN AUTH =====
         const ADMIN_EMAILS = ['k.vigneshsivan@gmail.com', 'enishanth29@gmail.com'];
