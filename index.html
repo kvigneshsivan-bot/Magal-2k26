@@ -1290,12 +1290,12 @@
         }
 
         // ===== ADMIN AUTH =====
-        const ADMIN_EMAIL = 'k.vigneshsivan@gmail.com';
+        const ADMIN_EMAILS = ['k.vigneshsivan@gmail.com', 'enishanth29@gmail.com'];
 
         function adminLogin(e) {
             e.preventDefault();
             const email = document.getElementById('adminEmailInput').value.trim().toLowerCase();
-            if (email === ADMIN_EMAIL) {
+            if (ADMIN_EMAILS.includes(email)) {
                 sessionStorage.setItem('magal2k26_admin', 'true');
                 showAdminContent();
                 showToast('Welcome, Admin!');
