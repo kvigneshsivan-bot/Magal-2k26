@@ -821,7 +821,7 @@
 
             <div class="hero-buttons" style="display:flex;gap:15px;flex-wrap:wrap;justify-content:center;margin-top:20px;">
                 <a href="javascript:void(0)" class="btn btn-primary" onclick="openGformModal('Poet')" style="min-width:180px;"><i class="fas fa-feather-pointed"></i> Register for Poet</a>
-                <a href="#register" class="btn btn-primary" onclick="selectRegType('Participation')" style="min-width:260px;display:flex;flex-direction:column;align-items:center;line-height:1.3;"><span><i class="fas fa-users"></i> Register for Participation</span><span style="font-size:0.65rem;font-weight:400;opacity:0.85;">Interest to Attend the Event</span></a>
+                <a href="javascript:void(0)" class="btn btn-primary" onclick="openGformModal('Participation')" style="min-width:260px;display:flex;flex-direction:column;align-items:center;line-height:1.3;"><span><i class="fas fa-users"></i> Register for Participation</span><span style="font-size:0.65rem;font-weight:400;opacity:0.85;">Interest to Attend the Event</span></a>
                 <a href="javascript:void(0)" class="btn btn-primary" onclick="openGformModal('Stall')" style="min-width:180px;"><i class="fas fa-store"></i> Register for Stall</a>
             </div>
         </div>
@@ -1108,10 +1108,14 @@
         // ===== GOOGLE FORM MODAL =====
         const gformUrls = {
             'Poet': 'https://docs.google.com/forms/d/e/1FAIpQLSdkmJon2DEp5rl3yQFMPoi1ssFgvEz4Pv0dGlbnzFUNE2a5zw/viewform?embedded=true',
-            'Stall': 'https://docs.google.com/forms/d/e/1FAIpQLScIDAQJat6GjBNHZt7E9gvoYtZnjDweKjXQCB7SMIbB7ekzLw/viewform?embedded=true'
+            'Stall': 'https://docs.google.com/forms/d/e/1FAIpQLScIDAQJat6GjBNHZt7E9gvoYtZnjDweKjXQCB7SMIbB7ekzLw/viewform?embedded=true',
+            'Participation': 'https://docs.google.com/forms/d/e/1FAIpQLSfcGL9L6SAAxPpsfmnffFpxMG-5Ya-ogBhfJ8QoDX85oTDlyg/viewform?embedded=true'
         };
 
+        let currentFormType = '';
+
         function openGformModal(type) {
+            currentFormType = type;
             const modal = document.getElementById('gformModal');
             const iframe = document.getElementById('gformIframe');
             const title = document.getElementById('gformTitle');
@@ -1127,6 +1131,15 @@
             modal.classList.remove('active');
             iframe.src = '';
             document.body.style.overflow = '';
+
+            if (currentFormType === 'Participation') {
+                selectedRegType = 'Participation';
+                setTimeout(() => {
+                    document.getElementById('cardGenerator').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    showToast('Now generate your invitation card below!');
+                }, 300);
+            }
+            currentFormType = '';
         }
 
 
@@ -1215,9 +1228,7 @@
                 return false;
             }
             if (!selectedRegType) {
-                showToast('Please select a registration type first (Poet / Participation / Stall)!', true);
-                document.querySelector('.reg-type-cards').scrollIntoView({ behavior: 'smooth', block: 'start' });
-                return false;
+                selectedRegType = 'Participation';
             }
 
             generateCard(name, year, dept);
